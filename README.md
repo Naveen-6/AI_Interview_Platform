@@ -33,8 +33,8 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/InterviewPrep.AI.git
-cd InterviewPrep.AI
+git clone https://github.com/yourusername/AI_Interview_Platform.git
+cd AI_Mock_Interview
 ```
 
 ### 2. Install Dependencies

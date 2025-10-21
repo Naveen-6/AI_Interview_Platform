@@ -11,6 +11,12 @@ export async function POST(request: Request){
     const { type, role, level, techstack, amount, userid } = await request.json();
 
     try {
+        console.log("Google API key exists:", !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+    console.log("Environment variables loaded:", {
+      hasGoogleKey: !!process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+      projectId: process.env.FIREBASE_PROJECT_ID,
+    });
+
         const { text: questions } = await generateText({
             model: google('gemini-2.0-flash-001'),
             prompt: `Prepare questions for a job interview.
@@ -32,7 +38,7 @@ export async function POST(request: Request){
             role, type, level,
             techstack: techstack.split(','),
             questions: JSON.parse(questions),
-            userId: userid,
+            userid: userid,
             finalized: true,
             coverImage: getRandomInterviewCover(),
             createdAt: new Date().toISOString()

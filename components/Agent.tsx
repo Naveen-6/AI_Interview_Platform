@@ -19,7 +19,7 @@ interface SavedMessage{
     content: string;
 }
 
-const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: AgentProps) => {
+const Agent = ({ userName, userid, type, interviewId, feedbackId, questions }: AgentProps) => {
     const router = useRouter();
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -69,7 +69,7 @@ const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: A
               },
               body: JSON.stringify({
                 interviewId,
-                userId,
+                userid,
                 transcript: messages,
                 feedbackId
               })
@@ -97,41 +97,39 @@ const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: A
                 handleGenerateFeedback(messages);
             }
         }
-    }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
+    }, [messages, callStatus, feedbackId, interviewId, router, type, userid]);
 
     const handleCall = async () => {
-        setCallStatus(CallStatus.CONNECTING);
-        // Add these logs at the very beginning
-    console.log("VAPI Workflow ID:", process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID);
-    console.log("VAPI Instance:", vapi);
-    console.log("Interviewer:", interviewer);
+    setCallStatus(CallStatus.CONNECTING);
 
-        if(type === 'generate'){
-            console.log(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID) // should print: 8b4030d8-f8d2-4b18-9699-6f65c08c6379
-
-            await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-                variableValues: {
-                    username: userName,
-                    userid: userId
-                }
-            })
-        } else {
-            let formattedQuestions = '';
-
-            if(questions){
-                formattedQuestions = questions
-                    .map((question) => `- ${question}`)
-                    .join('\n');
-            }
-
-            await vapi.start(interviewer, {
-                variableValues: {
-                    questions: formattedQuestions
-                }
-            })
+    if (type === "generate") {
+      await vapi.start(
+        undefined,
+        undefined,
+        undefined,
+        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,
+        {
+          variableValues: {
+            username: userName,
+            userid: userid,
+          },
         }
-        
+      );
+    } else {
+      let formattedQuestions = "";
+      if (questions) {
+        formattedQuestions = questions
+          .map((question) => `- ${question}`)
+          .join("\n");
+      }
+
+      await vapi.start(interviewer, {
+        variableValues: {
+          questions: formattedQuestions,
+        },
+      });
     }
+  };
 
     const handleDisconnect = async () => {
         setCallStatus(CallStatus.FINISHED);

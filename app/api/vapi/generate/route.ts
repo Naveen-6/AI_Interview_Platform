@@ -8,7 +8,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request){
-    const { type, role, level, techstack, amount, userid } = await request.json();
+    const { type, role, level, techstack, amount, userId } = await request.json();
 
     try {
         console.log("Google API key exists:", !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
@@ -38,7 +38,7 @@ export async function POST(request: Request){
             role, type, level,
             techstack: techstack.split(','),
             questions: JSON.parse(questions),
-            userid: userid,
+            userId: userId,
             finalized: true,
             coverImage: getRandomInterviewCover(),
             createdAt: new Date().toISOString()

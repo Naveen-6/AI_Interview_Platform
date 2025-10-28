@@ -19,7 +19,7 @@ interface SavedMessage{
     content: string;
 }
 
-const Agent = ({ userName, userid, type, interviewId, feedbackId, questions }: AgentProps) => {
+const Agent = ({ userName, userId, type, interviewId, feedbackId, questions }: AgentProps) => {
     const router = useRouter();
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -69,7 +69,7 @@ const Agent = ({ userName, userid, type, interviewId, feedbackId, questions }: A
               },
               body: JSON.stringify({
                 interviewId,
-                userid,
+                userId,
                 transcript: messages,
                 feedbackId
               })
@@ -97,7 +97,7 @@ const Agent = ({ userName, userid, type, interviewId, feedbackId, questions }: A
                 handleGenerateFeedback(messages);
             }
         }
-    }, [messages, callStatus, feedbackId, interviewId, router, type, userid]);
+    }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
     const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
@@ -111,7 +111,7 @@ const Agent = ({ userName, userid, type, interviewId, feedbackId, questions }: A
         {
           variableValues: {
             username: userName,
-            userid: userid,
+            userId: userId,
           },
         }
       );

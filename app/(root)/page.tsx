@@ -6,7 +6,7 @@ import InterviewCard from "@/components/InterviewCard";
 
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
-  getInterviewsByUserId,
+  getInterviewsByuserId,
   getLatestInterviews,
 } from "@/lib/actions/general.action";
 
@@ -14,7 +14,7 @@ async function Home() {
   const user = await getCurrentUser();
 
   const [userInterviews, allInterview] = await Promise.all([
-    getInterviewsByUserId(user?.id!),
+    getInterviewsByuserId(user?.id!),
     getLatestInterviews({ userId: user?.id! }),
   ]);
 

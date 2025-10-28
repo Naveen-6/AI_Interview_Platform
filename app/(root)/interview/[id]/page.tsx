@@ -16,7 +16,7 @@ const page = async ({ params }: RouteParams) => {
 
     const feedback = await getFeedbackByInterviewId({
         interviewId: id,
-        userid: user?.id!,
+        userId: user?.id!,
     });
 
   return (
@@ -34,7 +34,7 @@ const page = async ({ params }: RouteParams) => {
 
         <Agent 
             userName={user?.name || ''}
-            userid={user?.id}
+            userId={user?.id}
             interviewId={id}
             type="interview"
             questions={interview.questions}

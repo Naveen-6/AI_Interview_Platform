@@ -1,11 +1,11 @@
 import { db } from "@/firebase/admin";
 
-export async function getInterviewsByUserId(userid: string): Promise<Interview[] | null> {
-  if (!userid) return []; // ✅ prevent querying with undefined userid
+export async function getInterviewsByuserId(userId: string): Promise<Interview[] | null> {
+  if (!userId) return []; // ✅ prevent querying with undefined userId
 
   const interviews = await db
     .collection("interviews")
-    .where("userid", "==", userid)
+    .where("userId", "==", userId)
     .orderBy("createdAt", "desc")
     .get();
 
@@ -16,16 +16,16 @@ export async function getInterviewsByUserId(userid: string): Promise<Interview[]
 }
 
 export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interview[] | null> {
-  const { userid, limit = 20 } = params;
+  const { userId, limit = 20 } = params;
 
   let ref = db
     .collection("interviews")
     .orderBy("createdAt", "desc")
     .where("finalized", "==", true)
 
-  // ✅ Only apply this filter if userid exists
-  if (userid) {
-    ref = ref.where("userid", "!=", userid);
+  // ✅ Only apply this filter if userId exists
+  if (userId) {
+    ref = ref.where("userId", "!=", userId);
   }
 
   const interviews = await ref.limit(limit).get();
@@ -42,14 +42,14 @@ export async function getInterviewById(id: string): Promise<Interview | null> {
 }
 
 export async function getFeedbackByInterviewId(params: GetFeedbackByInterviewIdParams): Promise<Feedback | null> {
-  const { interviewId, userid } = params;
+  const { interviewId, userId } = params;
 
-  if (!userid) return null; // ✅ safety check
+  if (!userId) return null; // ✅ safety check
 
   const feedback = await db
     .collection("feedback")
     .where("interviewId", "==", interviewId)
-    .where("userid", "==", userid)
+    .where("userId", "==", userId)
     .limit(1)
     .get();
 

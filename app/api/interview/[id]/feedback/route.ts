@@ -8,7 +8,7 @@ export async function POST(
     request: Request
 ) {
   try {
-    const { interviewId, userid, transcript } = await request.json();
+    const { interviewId, userId, transcript } = await request.json();
 
     const formattedTranscript = transcript
       .map((s: { role: string; content: string }) => `- ${s.role}: ${s.content}`)
@@ -43,7 +43,7 @@ export async function POST(
 
     const feedback = await db.collection("feedback").add({
       interviewId,
-      userid,
+      userId,
       totalScore,
       categoryScores,
       strengths,

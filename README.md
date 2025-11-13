@@ -2,6 +2,9 @@
 
 **InterviewPrep.AI** is an AI-powered mock interview platform that helps users practice and prepare for real-world job interviews through interactive voice sessions and instant feedback. Powered by LLMs and real-time voice AI, it delivers a dynamic and personalized interview experience from start to finish.
 
+## 🌐 Live Demo
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://ai-interview-platform-b28u.vercel.app/sign-in)
+
 ---
 
 ## 🚀 Features
